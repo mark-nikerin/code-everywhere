@@ -8,10 +8,7 @@ import edit from '../img/edit.svg';
 import './place.css';
 
 
-const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order }) => {
-  const [ faster, setFaster ] = useState(true);
-  const [ time, setTime ] = useState('');
-  const [ selfService, setSelfService ] = useState(false);
+const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order, faster, time, selfService, setFaster, setTime, setSelfService }) => {
   const area = foodAreas.filter(area => area.id === areaId)[0];
   const item = area.items.filter(item => item.id === itemId)[0];
 
@@ -107,8 +104,8 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order }) => {
         <h3>Время:</h3>
         <div className="Place__choice-item">
           <span>Как можно быстрее</span>
-          <Checkbox 
-            checked={faster} 
+          <Checkbox
+            checked={faster}
             onToggle={() => {
               if (faster) {
                 setFaster(false);

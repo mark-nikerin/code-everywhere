@@ -56,8 +56,8 @@ const Order = ({ match: { params: { areaId, itemId }}, history, foodAreas, setAc
         </h3>
       </div>
       <footer className="Place__footer">
-        <div 
-          to="/orders" 
+        <div
+          to="/orders"
           className="Place__order"
           onClick={() => {
             setActiveOrder({ itemId });

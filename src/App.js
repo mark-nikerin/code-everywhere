@@ -127,12 +127,24 @@ const foodsMap = FOOD_AREAS.reduce((result, area) => {
 const App = () => {
 	const [ orderStatuses, setOrderStatuses ] = useState(JSON.parse((localStorage.getItem('orderStatuses') || 'null')) || {});
 	const [ order, setOrder ] = useState(JSON.parse((localStorage.getItem('orders') || 'null')) || {});
+	const [ faster, setFaster ] = useState(true);
+  const [ time, setTime ] = useState('');
+  const [ selfService, setSelfService ] = useState(false);
+
+	const resetOrderSettings = () => {
+		setFaster(true);
+		setTime('');
+		setSelfService(false);
+	}
 
 	return (
 		<Router>
 			<Switch>
 				<Route path="/" exact>
-					<Home foodAreas={FOOD_AREAS} order={order} />
+					<Home
+					foodAreas={FOOD_AREAS}
+					order={order}
+					resetOrderSettings={resetOrderSettings}/>
 				</Route>
 				<Route path="/order/:areaId/:itemId" exact>
 					<Order
@@ -152,13 +164,19 @@ const App = () => {
 					<Basket
 						foodAreas={FOOD_AREAS}
 						order={order}
+						faster={faster}
+						setFaster={setFaster}
+						time={time}
+						setTime={setTime}
+						selfService={selfService}
+						setSelfService={setSelfService}
 					/>
 				</Route>
 				<Route
 					path="/orders"
 					exact
 				>
-					<Orders 
+					<Orders
 						order={order}
 						orderStatuses={orderStatuses}
 						foodAreas={FOOD_AREAS}
@@ -180,7 +198,7 @@ const App = () => {
 						}}
 					/>
 				</Route>
-				<Route 
+				<Route
 					path="/place/:area/:place"
 					render={routeProps => {
 						return (
@@ -218,7 +236,7 @@ const App = () => {
 									}
 
 									const serialized = JSON.stringify(updatedOrder);
-									
+
 									localStorage.setItem('orders', serialized);
 									localStorage.setItem('orderStatuses', JSON.stringify(nextOrderStatuses));
 
@@ -253,7 +271,7 @@ const App = () => {
 									}
 
 									const serialized = JSON.stringify(updatedOrder);
-									
+
 									localStorage.setItem('orders', serialized);
 									localStorage.setItem('orderStatuses', JSON.stringify(nextOrderStatuses));
 
